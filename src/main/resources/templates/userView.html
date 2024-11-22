@@ -11,10 +11,10 @@
         <th>Nome</th>
         <th>Email</th>
     </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.email}"></td>
+    <tr th:each="usuario : ${users}">
+        <td th:text="${usuario.getId()}"></td>
+        <td th:text="${usuario.getName()}"></td>
+        <td th:text="${usuario.getAdm()}"></td>
     </tr>
 </table>
 </body>

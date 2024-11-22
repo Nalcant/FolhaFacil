@@ -1,41 +1,45 @@
 package org.example.folhafacil.models;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.math.BigInteger;
 import java.util.Date;
 
-import java.util.List;
-
+@Entity
 public class Colaborador {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id_colaborador;
     private String nome;
     private String email;
     private String telefone;
-    private String cpf;
+    @Column(unique = true)
+    private BigInteger cpf;
+    @Column(unique = true)
     private String rg;
     private String departamento;
-    private float Salario;
+    private String cargo;
     private Date dataAdmis;
     private Date dataDemiss;
-    private List<HistoricoSalarial> historicoSalarial;
+    @OneToOne(mappedBy = "colaborador") // Lado inverso, o colaborador não detém a chave estrangeira
+    private Usuario usuario;
+    @OneToOne(mappedBy = "colaborador" )
+    private PontoDia pontoDia;
 
-    public String getCpf() {
+    public BigInteger getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(BigInteger cpf) {
         this.cpf = cpf;
     }
 
-    public int getId() {
-        return id;
+    public long getId_colaborador() {
+        return id_colaborador;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_colaborador(int id_colaborador) {
+        this.id_colaborador = id_colaborador;
     }
 
     public String getNome() {
@@ -79,21 +83,6 @@ public class Colaborador {
     }
 
 
-    public void registrarAdmissao(){
-
-    }
-
-    public void registrarDemissao(){
-
-
-    }
-
-    public void atualizarDadosPessoais(){
-
-    }
-
-
-
-
-
 }
+
+
