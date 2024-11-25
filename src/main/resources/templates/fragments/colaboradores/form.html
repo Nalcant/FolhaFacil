@@ -1,0 +1,54 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+<h1>Inserir Dados do Colaborador</h1>
+<form action="#" th:action="@{/colaboradores/salvar}" th:object="${colaborador}" method="post">
+    <label>
+        <span>Nome:</span>
+        <input type="text" id="nome" th:field="*{nome}" />
+    </label>
+    <div class="row">
+        <label>
+            <span>Email:</span>
+            <input type="text" id="email" th:field="*{email}" />
+        </label>
+        <label>
+            <span>Telefone:</span>
+            <input type="text" id="telefone" th:field="*{telefone}" />
+        </label>
+    </div>
+    <div class="row">
+        <label>
+            <span>CPF:</span>
+            <input type="text" id="cpf" th:field="*{cpf}" />
+        </label>
+        <label>
+            <span>RG:</span>
+            <input type="text" id="rg" th:field="*{rg}" />
+        </label>
+    </div>
+    <div class="row">
+        <label>
+            <span>Departamento:</span>
+            <input type="text" id="departamento" th:field="*{departamento}" />
+        </label>
+        <label>
+            <span>Cargo:</span>
+            <input type="text" id="cargo" th:field="*{cargo}" />
+        </label>
+        <label>
+            <span>Data de admissão:</span>
+            <input type = "date" id="dataAdmissao" th:field="*{dataAdmissao}" />
+        </label>
+    </div>
+    <label>
+        <span>Usuário:</span>
+        <select id="usuario" th:field = "*{usuario}">
+            <option th:each="u: ${usuarios}" th:value="${u.id}" th:text="${u.login}">Usuário</option>
+        </select>
+    </label>
+    <button type="submit">Registrar Colaborador</button>
+</form>
+</main>
+</body>
+</html>

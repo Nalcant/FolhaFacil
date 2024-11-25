@@ -1,53 +1,50 @@
 package org.example.folhafacil.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Entity
-public class Usuario {
+import java.io.Serializable;
+
+@NoArgsConstructor
+@ToString
+@Setter
+@Getter
+@Entity(name = "usuarios")
+public class Usuario implements Serializable {
+    @Getter
+    enum GrupoAcesso {
+        ADMIN("Administrador"),
+        FUNCIONARIO("Funcionário");
+
+        private final String descricao;
+
+        GrupoAcesso(String descricao) {
+            this.descricao = descricao;
+        }
+    }
+
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id_usuario;
-    @Column(nullable = false, unique = true)
-    private String name;
-    @Column(nullable = false)
-    private String password;
-    private Boolean adm;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column( length = 50, nullable = false, unique = true)
+    @Size(min = 3, max = 50)
+    private String login;
+    
+    @ToString.Exclude
+    @Column( length = 50, nullable = false)
+    @Size(min = 3, max = 50)
+    private String senha;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private GrupoAcesso grupoAcesso;
 
-    @OneToOne // Lado proprietário do relacionamento
-    @JoinColumn(name = "colaborador") // Chave estrangeira para Colaborador
+    @ToString.Exclude
+    @OneToOne(mappedBy = "usuario")
     private Colaborador colaborador;
-
-    // Getters and Setters
-    public Boolean getAdm() {
-        return adm;
-    }
-
-    public void setAdm(Boolean adm) {
-        this.adm = adm;
-    }
-
-    public Long getId() {
-        return id_usuario;
-    }
-
-    public void setId(Long id) {
-        this.id_usuario = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

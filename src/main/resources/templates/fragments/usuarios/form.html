@@ -1,0 +1,31 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+    <h1>Inserir Dados do Usuário</h1>
+    <form action="#" th:action="@{/usuarios/salvar}" th:object="${usuario}"  method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>
+            <span>Nome:</span>
+            <input type="text" th:field="*{login}" />
+            <ul>
+                <li th:each="err : ${#fields.errors('login')}" th:text="${err}" />
+            </ul>
+        </label>
+        <label>
+            <span>Senha:</span>
+            <input type="password" th:field="*{senha}" />
+            <ul>
+                <li th:each="err : ${#fields.errors('senha')}" th:text="${err}" />
+            </ul>
+        </label>
+        <label>
+            <span>Grupo de acesso:</span>
+            <select th:field = "*{grupoAcesso}">
+                <option th:each="g: ${T(org.example.folhafacil.models.Usuario.GrupoAcesso).values()}" th:value="${g}" th:text="${g.descricao}">Grupo</option>
+            </select>
+        </label>
+        <button type="submit">Registrar Usuario</button>
+    </form>
+</main>
+</body>
+</html>

@@ -1,88 +1,74 @@
 package org.example.folhafacil.models;
+
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
-import java.math.BigInteger;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
-@Entity
-public class Colaborador {
-
+@ToString
+@Entity(name = "colaboradores")
+@Getter
+@Setter
+@NoArgsConstructor
+public class Colaborador implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id_colaborador;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(length = 255, nullable = false)
+    @Size(min = 3, max = 255)
+    @NotNull
     private String nome;
+    @Column(length = 255, nullable = false)
+    @Size(min = 3, max = 255)
     private String email;
+    @Column(length = 11, nullable = false)
+    @Size(min = 11, max = 11)
     private String telefone;
-    @Column(unique = true)
-    private BigInteger cpf;
-    @Column(unique = true)
+    @Column(length = 11,unique = true, nullable = false)
+    @Size(min = 11, max = 11)
+    private String cpf;
+    @Column(length = 20, nullable = false)
+    @Size(min = 5, max = 20)
     private String rg;
-    private String departamento;
-    private String cargo;
-    private Date dataAdmis;
-    private Date dataDemiss;
-    @OneToOne(mappedBy = "colaborador") // Lado inverso, o colaborador não detém a chave estrangeira
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "data_admissao")
+    @Temporal(TemporalType.DATE)
+    private Date dataAdmissao;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "data_demissao")
+    @Temporal(TemporalType.DATE)
+    private Date dataDemissao;
+
+    @ToString.Exclude
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "cargo_id")
+    private Cargo cargo;
+
+    @ToString.Exclude
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "departamento_id")
+    private Departamento departamento;
+
+    @ToString.Exclude
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    @OneToOne(mappedBy = "colaborador" )
-    private PontoDia pontoDia;
 
-    public BigInteger getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(BigInteger cpf) {
-        this.cpf = cpf;
-    }
-
-    public long getId_colaborador() {
-        return id_colaborador;
-    }
-
-    public void setId_colaborador(int id_colaborador) {
-        this.id_colaborador = id_colaborador;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-
+    @ToString.Exclude
+    @OneToMany(mappedBy = "colaborador")
+    private List<Ponto> pontos;
 }
 
 

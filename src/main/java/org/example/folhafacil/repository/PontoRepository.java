@@ -1,11 +1,13 @@
 package org.example.folhafacil.repository;
 
-import org.example.folhafacil.models.Salario;
+
+import org.example.folhafacil.models.Ponto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SalarioRepository extends CrudRepository<Salario, Long>, ListPagingAndSortingRepository<Salario, Long> {
+public interface PontoRepository extends CrudRepository<Ponto, Long>, ListPagingAndSortingRepository<Ponto, Long> {
 
 }
+

@@ -1,0 +1,33 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Usuários Inseridos</h1>
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usuario : ${usuarios}">
+      <th scope="row" th:text="${usuario.id}"></th>
+      <td th:text="${usuario.login}"></td>
+      <td th:text="${usuario.grupoAcesso.descricao}"></td>
+      <td>
+        <a th:href="@{/usuarios/{id}/(id=${usuario.id})}">Editar</a>
+        <a th:href="@{/usuarios/{id}/excluir(id=${usuario.id})}"
+           th:data-confirm-delete="|Deseja realmente excluir o usuário ${usuario.login}?|"
+           onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Excluir </a>
+      </td>
+    </tr>
+    <tr th:if="${usuarios.empty}">
+      <td colspan="3">Nenhum usuário cadastrado.</td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

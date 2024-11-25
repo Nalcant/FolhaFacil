@@ -1,0 +1,132 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    background: #2C3135;
+    width: 240px;
+    --horizontal-padding: 12px;
+    --vertical-padding: 6px;
+}
+
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #ecf0f1;
+}
+
+.sidebar ul li {
+    display: block;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.sidebar ul li details summary,
+.sidebar ul li a {
+    border-left: 2px solid transparent;
+}
+
+.sidebar ul li details summary:hover,
+.sidebar ul li a:hover {
+    border-color: #0187CD;
+}
+
+.sidebar ul li details summary:hover,
+.sidebar ul li a:hover,
+.sidebar ul li details[open] summary {
+    background: #36393F;
+}
+
+.sidebar ul li details[open] ul {
+    background: #27282A;
+}
+
+.sidebar ul li details summary, .sidebar ul li a {
+    padding: var(--vertical-padding) var(--horizontal-padding);
+}
+
+/* Área de conteúdo */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+    overflow-y: auto;
+}
+
+/* Mensagem de carregando */
+#loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #7f8c8d;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 640px;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    width: 100%;
+}
+
+form .row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    width: 100%;
+}
+
+form button {
+    width: max-content;
+    align-self: center;
+}
+
+form label ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: crimson;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background: lightsteelblue;
+}
+
+table td {
+    padding: 0.25em;
+    text-align: center;
+    background-color: aliceblue;
+    
+}
+
+
+
+
+

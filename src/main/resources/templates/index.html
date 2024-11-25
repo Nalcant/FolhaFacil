@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang=”pt-br” th:fragment="layout(content)">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barra Lateral e Conteúdo Dinâmico</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<aside class="sidebar">
+  <ul>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <details>
+        <summary>Departamentos</summary>
+        <ul>
+          <li>
+            <a href="/departamentos/">Listar</a>
+          </li>
+          <li>
+            <a href="/departamentos/criar">Criar</a>
+          </li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Cargos</summary>
+        <ul>
+          <li>
+            <a href="/cargos/">Listar</a>
+          </li>
+          <li>
+            <a href="/cargos/criar">Criar</a>
+          </li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Colaboradores</summary>
+        <ul>
+          <li>
+            <a href="/colaboradores/">Listar</a>
+          </li>
+          <li>
+            <a href="/colaboradores/criar">Criar</a>
+          </li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Usuários</summary>
+        <ul>
+          <li>
+            <a href="/usuarios/">Listar</a>
+          </li>
+          <li>
+            <a href="/usuarios/criar">Criar</a>
+          </li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+</aside>
+
+<main th:insert="${content}">
+</main>
+<script src="/js/app.js"></script>
+</body>
+</html>
