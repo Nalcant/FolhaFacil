@@ -1,0 +1,18 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Inserir Dados do Cargo</h1>
+  <form action="#" th:action="@{/cargos/salvar}" th:object="${cargo}"  method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>
+      <span>Descrição:</span>
+      <input type="text" th:field="*{descricao}" />
+      <ul>
+        <li th:each="err : ${#fields.errors('descricao')}" th:text="${err}" />
+      </ul>
+    </label>
+    <button type="submit">Registrar Cargo</button>
+  </form>
+</main>
+</body>
+</html>

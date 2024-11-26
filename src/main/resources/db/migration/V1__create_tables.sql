@@ -48,7 +48,7 @@ CREATE TABLE encargos
 (
     id         BIGINT PRIMARY KEY Auto_increment,
     descricao  varchar(100)  not null,
-    pocentagem DECIMAL(5, 2) not null
+    porcentagem DECIMAL(5, 2) not null
 );
 
 CREATE TABLE salarios

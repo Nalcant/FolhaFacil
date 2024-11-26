@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html th:replace="~{index :: layout (~{:: main})}">
 <body>
-
+<main th:fragment="content">
+    <h1>Colaboradores</h1>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>CPF</th>
+            <th>RG</th>
+            <th>Cargo</th>
+            <th>Departamento</th>
+            <th>Admissão</th>
+            <th>Demissão</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="colaborador : ${colaboradores}">
+            <th scope="row" th:text="${colaborador.id}"></th>
+            <td th:text="${colaborador.nome}"></td>
+            <td th:text="${colaborador.email}"></td>
+            <td th:text="${colaborador.telefone}"></td>
+            <td th:text="${colaborador.cpf}"></td>
+            <td th:text="${colaborador.rg}"></td>
+            <td th:text="${colaborador.cargo.descricao}"></td>
+            <td th:text="${colaborador.departamento.descricao}?: 'NULL'"></td>
+            <td th:text="${colaborador.dataAdmissao} ?:'NULL'"></td>
+            <td  th:text="${colaborador.dataDemissao} ?: 'NA'"></td>
+            <td>
+                <a th:href="@{/colaboradores/{id}/(id=${colaborador.id})}">Editar</a>
+                <a th:href="@{/folha-pagamento/{id}/(id=${colaborador.id})}">Folha de pagamento</a>
+                <a th:href="@{/jornada/{id}/(id=${colaborador.id})}">Jornada</a>
+                <a th:href="@{/colaboradores/{id}/demitir(id=${colaborador.id})}"
+                   th:colaborador-demissao="|Deseja realmente registrar demissão de ${colaborador.nome}?|"
+                   onclick="if (!confirm(this.getAttribute('colaborador-demissao'))) return false">Demitir</a><a th:href="@{/colaboradores/{id}/demitir(id=${colaborador.id})}"
+                   th:colaborador-deletar="|Deseja realmente excluir ${colaborador.nome}?|"
+                   onclick="if (!confirm(this.getAttribute('colaborador-deletar'))) return false">Excluir</a>
+            </td>
+        </tr>
+        <tr th:if="${colaboradores.empty}">
+            <td colspan="11">Nenhum colaborador cadastrado.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
 </body>
 </html>

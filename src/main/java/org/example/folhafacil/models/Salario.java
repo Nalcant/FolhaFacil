@@ -33,7 +33,7 @@ public class Salario implements Serializable {
     private Date dataFim;
 
     @ToString.Exclude
-    @OneToOne(optional=false)
+    @OneToOne(optional=false, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(name = "colaborador_id")
     private Colaborador colaborador;
@@ -55,4 +55,8 @@ public class Salario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "beneficio_id")
     )
     private List<Beneficio> beneficios;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "salario")
+    private List<Holerite> holerites;
 }

@@ -2,7 +2,9 @@ package org.example.folhafacil.controllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.example.folhafacil.models.Colaborador;
+import org.example.folhafacil.repository.CargoRepository;
 import org.example.folhafacil.repository.ColaboradorRepository;
+import org.example.folhafacil.repository.DepartamentoRepository;
 import org.example.folhafacil.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class ColaboradorController {
     @Autowired
     UsuarioRepository usuarioRepository;
-    @Autowired ColaboradorRepository colaboradorRepository;
+    @Autowired
+    ColaboradorRepository colaboradorRepository;
+    @Autowired
+    CargoRepository cargoRepository;
+    @Autowired
+    DepartamentoRepository departamentoRepository;
 
 
     @GetMapping("/criar")
     public String showForm(Model model) {
-        // Adicionar o objeto colaborador ao modelo
+        model.addAttribute("cargos", cargoRepository.findAll());
+        model.addAttribute("departamentos", departamentoRepository.findAll());
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("colaborador", new Colaborador());
         return "fragments/colaboradores/form";

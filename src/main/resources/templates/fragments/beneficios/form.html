@@ -1,0 +1,25 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Inserir Dados do Beneficio</h1>
+  <form action="#" th:action="@{/beneficios/salvar}" th:object="${beneficio}"  method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>
+      <span>Descrição:</span>
+      <input type="text" th:field="*{descricao}" />
+      <ul>
+        <li th:each="err : ${#fields.errors('descricao')}" th:text="${err}" />
+      </ul>
+    </label>
+    <label>
+      <span>Valor aplicado (fixo):</span>
+      <input type="text" th:field="*{valorAplicado}" />
+      <ul>
+        <li th:each="err : ${#fields.errors('valorAplicado')}" th:text="${err}" />
+      </ul>
+    </label>
+    <button type="submit">Registrar Departamento</button>
+  </form>
+</main>
+</body>
+</html>

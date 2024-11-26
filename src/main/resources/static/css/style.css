@@ -118,6 +118,10 @@ table {
 table thead {
     background: lightsteelblue;
 }
+table tbody tr th{
+    background: lightsteelblue;
+
+}
 
 table td {
     padding: 0.25em;

@@ -1,0 +1,31 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Departamentos</h1>
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="departamento : ${departamentos}">
+      <th scope="row" th:text="${departamento.id}"></th>
+      <td th:text="${departamento.descricao}"></td>
+      <td>
+        <a th:href="@{/departamentos/{id}/(id=${departamento.id})}">Editar</a>
+        <a th:href="@{/departamentos/{id}/excluir(id=${departamento.id})}"
+           th:data-confirm-delete="|Deseja realmente excluir o departamento ${departamento.descricao}?|"
+           onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Excluir</a>
+      </td>
+    </tr>
+    <tr th:if="${departamentos.empty}">
+      <td colspan="3">Nenhum departamento cadastrado.</td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

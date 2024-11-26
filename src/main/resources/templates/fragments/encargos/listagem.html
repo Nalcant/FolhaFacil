@@ -1,0 +1,33 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Encargos</h1>
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th>Descrição</th>
+      <th>Valor aplicado (porcentagem)</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="encargo : ${encargos}">
+      <th scope="row" th:text="${encargo.id}"></th>
+      <td th:text="${encargo.descricao}"></td>
+      <td th:text="${encargo.porcentagem}"></td>
+      <td>
+        <a th:href="@{/departamentos/{id}/(id=${encargo.id})}">Editar</a>
+        <a th:href="@{/departamentos/{id}/excluir(id=${encargo.id})}"
+           th:data-confirm-delete="|Deseja realmente excluir o encago: ${encargo.descricao}?|"
+           onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Excluir</a>
+      </td>
+    </tr>
+    <tr th:if="${encargos.empty}">
+      <td colspan="4">Nenhum encargo cadastrado.</td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

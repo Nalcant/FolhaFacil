@@ -1,0 +1,18 @@
+<html th:replace="~{index :: layout (~{:: main})}">
+<body>
+<main th:fragment="content">
+  <h1>Inserir Dados do Departamento</h1>
+  <form action="#" th:action="@{/departamentos/salvar}" th:object="${departamento}"  method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>
+      <span>Descrição:</span>
+      <input type="text" th:field="*{descricao}" />
+      <ul>
+        <li th:each="err : ${#fields.errors('descricao')}" th:text="${err}" />
+      </ul>
+    </label>
+    <button type="submit">Registrar Departamento</button>
+  </form>
+</main>
+</body>
+</html>

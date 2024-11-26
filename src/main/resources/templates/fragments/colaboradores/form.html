@@ -30,11 +30,15 @@
     <div class="row">
         <label>
             <span>Departamento:</span>
-            <input type="text" id="departamento" th:field="*{departamento}" />
+            <select id="departamento" th:field = "*{departamento}">
+                <option th:each="d: ${departamentos}" th:value="${d.id}" th:text="${d.descricao}">Departamento</option>
+            </select>
         </label>
         <label>
             <span>Cargo:</span>
-            <input type="text" id="cargo" th:field="*{cargo}" />
+            <select id="cargo" th:field = "*{cargo}">
+                <option th:each="c: ${cargos}" th:value="${c.id}" th:text="${c.descricao}">Cargo</option>
+            </select>
         </label>
         <label>
             <span>Data de admissão:</span>
