@@ -1,24 +1,35 @@
 <html th:replace="~{index :: layout (~{:: main})}">
 <body>
 <main th:fragment="content">
-  <h1>Inserir Dados do Departamento</h1>
-  <form action="#" th:action="@{/encargos/salvar}" th:object="${salario}"  method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>
-      <span>Descrição:</span>
-      <input type="text" th:field="*{descricao}" />
-      <ul>
-        <li th:each="err : ${#fields.errors('descricao')}" th:text="${err}" />
-      </ul>
-    </label>
-    <label>
-      <span>Valor aplicado (porcentagem):</span>
-      <input type="text" th:field="*{porcentagem}" />
-      <ul>
-        <li th:each="err : ${#fields.errors('porcentagem')}" th:text="${err}" />
-      </ul>
-    </label>
-    <button type="submit">Registrar Departamento</button>
+  <h1>Inserir Dados do Salario</h1>
+  <form action="#" th:action="@{/salarios/salvar}" th:object="${salario}" method="post">
+    <div class="row">
+      <label>
+        <label>
+          <span>Colaborador:</span>
+          <select id="colaborador" th:field="*{colaborador}">
+            <option th:each="c: ${colaboradores}" th:value="${c.id}" th:text="${c.nome}">Colaborador</option>
+          </select>
+        </label>
+        <span>Salário Base:</span>
+        <input type="text" id="salarioBase" th:field="*{salarioBase}"/>
+      </label>
+    </div>
+    <div class="row">
+      <span>Encargos:</span>
+      <select id="encargo" th:field="*{encargos}">
+        <option th:each="e: ${encargos}" th:value="${e.id}" th:text="${e.descricao}">Colaborador</option>
+      </select>
+      <button type="submit">Adicionar encargo</button>
+    </div>
+    <div class="row">
+        <span>Beneficios:</span>
+        <select id="beneficio" th:field="*{beneficios}">
+          <option th:each="b: ${beneficios}" th:value="${b.id}" th:text="${b.descricao}">Beneficio</option>
+        </select>
+      <button type="submit">Adicionar beneficio</button>
+    </div>
+    <button type="submit">Registrar salário</button>
   </form>
 </main>
 </body>
