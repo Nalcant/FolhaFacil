@@ -17,8 +17,8 @@
       <td th:text="${beneficio.descricao}"></td>
       <td th:text="${beneficio.valorAplicado}"></td>
       <td>
-        <a th:href="@{/departamentos/{id}/(id=${beneficio.id})}">Editar</a>
-        <a th:href="@{/departamentos/{id}/excluir(id=${beneficio.id})}"
+        <a th:href="@{/beneficios/{id}/(id=${beneficio.id})}">Editar</a>
+        <a th:href="@{/beneficios/{id}/excluir(id=${beneficio.id})}"
            th:data-confirm-delete="|Deseja realmente excluir o encago: ${beneficio.descricao}?|"
            onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Excluir</a>
       </td>

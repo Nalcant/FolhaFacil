@@ -35,11 +35,11 @@ public class BeneficioController {
     @GetMapping("/{id}/")
     public String editForm(@PathVariable(required = true, name = "id") long id, Model model) {
         // Adicionar o objeto colaborador ao modelo
-        var beneficios = beneficioRepository.findById(id).orElse(null);
-        if (beneficios == null) {
+        var beneficio = beneficioRepository.findById(id).orElse(null);
+        if (beneficio == null) {
             return "redirect:/beneficios/";
         }
-        model.addAttribute("beneficios", beneficios);
+        model.addAttribute("beneficio", beneficio);
         return "fragments/beneficios/form";
     }
 

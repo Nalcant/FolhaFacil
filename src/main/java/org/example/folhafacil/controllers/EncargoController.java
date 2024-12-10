@@ -35,11 +35,11 @@ public class EncargoController {
     @GetMapping("/{id}/")
     public String editForm(@PathVariable(required = true, name = "id") long id, Model model) {
         // Adicionar o objeto colaborador ao modelo
-        var encargos = encargoRepository.findById(id).orElse(null);
-        if (encargos == null) {
+        var encargo = encargoRepository.findById(id).orElse(null);
+        if (encargo == null) {
             return "redirect:/encargos/";
         }
-        model.addAttribute("departamento", encargos);
+        model.addAttribute("encargo", encargo);
         return "fragments/encargos/form";
     }
 

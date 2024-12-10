@@ -15,22 +15,50 @@
         <input type="text" id="salarioBase" th:field="*{salarioBase}"/>
       </label>
     </div>
-    <div class="row">
-      <span>Encargos:</span>
-      <select id="encargo" th:field="*{encargos}">
-        <option th:each="e: ${encargos}" th:value="${e.id}" th:text="${e.descricao}">Colaborador</option>
-      </select>
-      <button type="submit">Adicionar encargo</button>
-    </div>
-    <div class="row">
-        <span>Beneficios:</span>
-        <select id="beneficio" th:field="*{beneficios}">
-          <option th:each="b: ${beneficios}" th:value="${b.id}" th:text="${b.descricao}">Beneficio</option>
-        </select>
-      <button type="submit">Adicionar beneficio</button>
+    <div class="dropdown">
+      <button type="button" th:onclick="addBeneficio()" class="dropdown">Pesquisar Beneficios</button>
+      <div id="MyDropdown" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+        <ul id="dropdown-options">
+          <li name="option" th:each="b: ${beneficios}" th:value="${b.id}" th:text="${b.descricao}">Beneficio</li>
+        </ul>
+      </div>
     </div>
     <button type="submit">Registrar salário</button>
   </form>
+  <script>
+      function addBeneficio() {
+
+          const element = document.getElementById("MyDropdown");
+          if (element == null) {
+              alert("Clicou em App.js, sem elemento");
+          } else {
+              element.classList.toggle("show");
+          }
+
+      }
+
+      function filterFunction() {
+          var input, filter
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          div = document.getElementById("myDropdown");
+          itens = document.getElementsByName("option");
+          for (const li of itens) {
+              console.log(li.innerText);
+              if (li.innerText.toLocaleUpperCase().includes(filter.toLocaleUpperCase())) {
+                  console.log("visível: " + li.innerText)
+                  li.style.display = "block";
+              } else {
+                  console.log("Invisível: "+li.innerText)
+                  li.style.display = "none";
+              }
+
+          }
+      }
+  </script>
 </main>
+
 </body>
 </html>
+

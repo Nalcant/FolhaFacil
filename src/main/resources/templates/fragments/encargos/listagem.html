@@ -17,8 +17,8 @@
       <td th:text="${encargo.descricao}"></td>
       <td th:text="${encargo.porcentagem}"></td>
       <td>
-        <a th:href="@{/departamentos/{id}/(id=${encargo.id})}">Editar</a>
-        <a th:href="@{/departamentos/{id}/excluir(id=${encargo.id})}"
+        <a th:href="@{/encargos/{id}/(id=${encargo.id})}">Editar</a>
+        <a th:href="@{/encargos/{id}/excluir(id=${encargo.id})}"
            th:data-confirm-delete="|Deseja realmente excluir o encago: ${encargo.descricao}?|"
            onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Excluir</a>
       </td>

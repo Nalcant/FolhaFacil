@@ -7,9 +7,6 @@
         <label>
             <span>Nome:</span>
             <input type="text" th:field="*{login}" />
-            <ul>
-                <li th:each="err : ${#fields.errors('login')}" th:text="${err}" />
-            </ul>
         </label>
         <label>
             <span>Senha:</span>
