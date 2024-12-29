@@ -15,47 +15,137 @@
         <input type="text" id="salarioBase" th:field="*{salarioBase}"/>
       </label>
     </div>
-    <div class="dropdown">
-      <button type="button" th:onclick="addBeneficio()" class="dropdown">Pesquisar Beneficios</button>
-      <div id="MyDropdown" class="dropdown-content">
-        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-        <ul id="dropdown-options">
-          <li name="option" th:each="b: ${beneficios}" th:value="${b.id}" th:text="${b.descricao}">Beneficio</li>
-        </ul>
+    <div class=row>
+      <label>
+        <span>Benefícios:</span>
+        <div class="dropdown">
+          <input type="text" placeholder="Search.." id="myInput" th:attr="name_dropdown = beneficioDropdown"
+                 onkeyup="filterFunction()"
+                 onclick="renderDropdown(this)">
+          <div id="MyDropdown" class="dropdown-content" name="beneficioDropdown">
+            <ul>
+              <li th:each="b : ${beneficios}">
+                <div class="select-label" th:attr="descricao = ${b.descricao}">
+                  <input type="checkbox" class="dropdown-check" name="beneficio-check"
+                         th:id="'beneficio-' + ${b.id}" th:value="${b}" onclick="selectItem(value, 'beneficio', this)">
+                  <label class="chek-label" th:for="'beneficio-' + ${b.id}" th:text="${b.descricao}"></label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <div class="selected-list">
+        <label>
+          <span>Selecionados:</span>
+        </label>
       </div>
     </div>
+    <div class=row>
+      <label>
+        <span>Encargos:</span>
+        <div class="dropdown">
+          <input type="text" placeholder="Search.." id="myInput" th:attr="name_dropdown = encargoDropdown"
+                 onkeyup="filterFunction()" onclick="renderDropdown(this)">
+          <div name="encargoDropdown" id="MyDropdown" class="dropdown-content">
+            <ul>
+              <li th:each="e : ${encargos}">
+                <div class="select-label" th:attr=" descricao = ${e.descricao}">
+                  <input type="checkbox" class="dropdown-check" name="beneficio-check"
+                         th:id="'beneficio-' + ${e.id}" th:value="${e}"
+                         onclick="selectItem(value, 'encargo',this)">
+                  <label class="chek-label" th:for="'beneficio-' + ${e.id}" th:text="${e.descricao}"></label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <label>
+        <span>Selecionados:</span>
+        <div class="selected-list">
+          <span name="empty">Nenhum Benefício Selecionado</span>
+          <ul>
+
+          </ul>
+
+        </div>
+      </label>
+    </div>
+
     <button type="submit">Registrar salário</button>
   </form>
   <script>
-      function addBeneficio() {
-
-          const element = document.getElementById("MyDropdown");
-          if (element == null) {
-              alert("Clicou em App.js, sem elemento");
-          } else {
-              element.classList.toggle("show");
-          }
-
-      }
-
       function filterFunction() {
           var input, filter
           input = document.getElementById("myInput");
           filter = input.value.toUpperCase();
-          div = document.getElementById("myDropdown");
-          itens = document.getElementsByName("option");
-          for (const li of itens) {
-              console.log(li.innerText);
-              if (li.innerText.toLocaleUpperCase().includes(filter.toLocaleUpperCase())) {
-                  console.log("visível: " + li.innerText)
-                  li.style.display = "block";
-              } else {
-                  console.log("Invisível: "+li.innerText)
-                  li.style.display = "none";
-              }
+          div = document.getElementById("MyDropdown");
 
+          itens = div.getElementsByTagName("li");
+          for (li of itens) {
+              // Obtém o benefício a partir do atributo "beneficio"
+              let beneficio = li.querySelector('.select-label').getAttribute('descricao');
+
+              // Compara o texto do benefício com o filtro
+              if (beneficio && beneficio.toUpperCase().indexOf(filter) > -1) {
+                  li.style.display = ""; // Mostra o item
+              } else {
+                  li.style.display = "none"; // Esconde o item
+              }
+          }
+
+      }
+
+      function selectItem(data, listType, check) {
+          //div pai de check
+          divPai = check.parentElement;
+          checkLabel = divPai.querySelector('.chek-label');
+          console.log(checkLabel);
+
+          if (listType == 'encargo') {
+              console.log('Lista é encargo');
+              // renderSelected()
+          } else {
+              console.log('Lista é benefício');
+              //renderSelected()
+          }
+
+      }
+
+      function renderSelected(data) {
+          console.log("selecionou");
+          console.log(data);
+
+      }
+
+      function renderDropdown(filter) {
+          if (filter == null) {
+              alert("sem elemento");
+          } else {
+              dropdown = document.getElementsByName(filter.getAttribute("name_dropdown"))[0]
+              console.log(dropdown)
+              dropdown.classList.toggle("show")
+              unrenderOutClick(dropdown)
           }
       }
+
+      function unrenderOutClick(element) {
+          // Adiciona um event listener para detectar cliques fora do elemento
+          console.log("underenderOutClick: \n" + element)
+
+          function handleClickOutside(event) {
+              if (!element.contains(event.target) && element.classList.contains("show")) {
+                  console.log("clicou fora")
+                  element.classList.remove("show");
+                  document.removeEventListener("click", handleClickOutside);
+              }
+          }
+
+          console.log("adicionou evento")
+          document.addEventListener("pointerdown", handleClickOutside);
+      }
+
   </script>
 </main>
 
