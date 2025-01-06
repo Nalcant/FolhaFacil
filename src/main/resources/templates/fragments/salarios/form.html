@@ -1,6 +1,8 @@
 <html th:replace="~{index :: layout (~{:: main})}">
 <body>
 <main th:fragment="content">
+  <input type="hidden" name="beneficiosSelecionados" id="hidden-beneficios">
+  <input type="hidden" name="encargosSelecionados" id="hidden-encargos">
   <h1>Inserir Dados do Salario</h1>
   <form action="#" th:action="@{/salarios/salvar}" th:object="${salario}" method="post">
     <div class="row">
@@ -11,12 +13,14 @@
             <option th:each="c: ${colaboradores}" th:value="${c.id}" th:text="${c.nome}">Colaborador</option>
           </select>
         </label>
-        <span>Salário Base:</span>
-        <input type="text" id="salarioBase" th:field="*{salarioBase}"/>
+        <label>
+          <span>Salário Base:</span>
+          <input type="text" id="salarioBase" th:field="*{salarioBase}"/>
+        </label>
       </label>
     </div>
     <div class=row>
-      <label>
+      <label class="row-element">
         <span>Benefícios:</span>
         <div class="dropdown">
           <input type="text" placeholder="Search.." id="myInput" th:attr="name_dropdown = beneficioDropdown"
@@ -27,7 +31,8 @@
               <li th:each="b : ${beneficios}">
                 <div class="select-label" th:attr="descricao = ${b.descricao}">
                   <input type="checkbox" class="dropdown-check" name="beneficio-check"
-                         th:id="'beneficio-' + ${b.id}" th:value="${b}" onclick="selectItem(value, 'beneficio', this)">
+                         th:id="'beneficio-' + ${b.id}" th:value="${b}"
+                         onclick="selectItem(value, 'beneficio', this)">
                   <label class="chek-label" th:for="'beneficio-' + ${b.id}" th:text="${b.descricao}"></label>
                 </div>
               </li>
@@ -35,14 +40,20 @@
           </div>
         </div>
       </label>
-      <div class="selected-list">
+      <div class="selecteds row-element">
         <label>
           <span>Selecionados:</span>
+          <div class="selected-list" id="selected-beneficio">
+            <span class="default-span" id="default-beneficio">Nenhum benefício selecionado</span>
+            <ul>
+
+            </ul>
+          </div>
         </label>
       </div>
     </div>
     <div class=row>
-      <label>
+      <label class="row-element">
         <span>Encargos:</span>
         <div class="dropdown">
           <input type="text" placeholder="Search.." id="myInput" th:attr="name_dropdown = encargoDropdown"
@@ -61,21 +72,23 @@
           </div>
         </div>
       </label>
-      <label>
-        <span>Selecionados:</span>
-        <div class="selected-list">
-          <span name="empty">Nenhum Benefício Selecionado</span>
-          <ul>
+      <div class="selecteds row-element">
+        <label>
+          <span>Selecionados:</span>
+          <div class="selected-list" id="selected-encargo">
+            <span class="default-span" id="default-encargo">Nenhum encargo selecionado</span>
+            <ul>
 
-          </ul>
-
-        </div>
-      </label>
+            </ul>
+          </div>
+        </label>
+      </div>
     </div>
 
     <button type="submit">Registrar salário</button>
   </form>
   <script>
+
       function filterFunction() {
           var input, filter
           input = document.getElementById("myInput");
@@ -98,24 +111,65 @@
       }
 
       function selectItem(data, listType, check) {
-          //div pai de check
-          divPai = check.parentElement;
-          checkLabel = divPai.querySelector('.chek-label');
+          console.log(check.checked)
+          isCheck = check.checked
+          divSelectLabel = check.parentElement;
+          checkLabel = divSelectLabel.querySelector('.chek-label');
           console.log(checkLabel);
+          targetList = document.getElementById('selected-' + listType)
+          targetListDefault = document.getElementById('default-' + listType)
+          console.log(targetListDefault)
 
-          if (listType == 'encargo') {
-              console.log('Lista é encargo');
-              // renderSelected()
-          } else {
-              console.log('Lista é benefício');
-              //renderSelected()
+
+          function renderSelected() {
+              console.log('desativando default')
+              if (targetListDefault.style.display != 'none') {
+                  targetListDefault.style.display = 'none'
+              }
+              cloneCheck = check.cloneNode()
+              cloneCheck.id = check.id + '-clone'
+              cloneLabel = checkLabel.cloneNode(true)
+              cloneDivSelectLabel = divSelectLabel.cloneNode(false)
+              cloneDivSelectLabel.appendChild(cloneCheck)
+              cloneDivSelectLabel.appendChild(cloneLabel)
+              newLi = document.createElement('li')
+              newLi.appendChild(cloneDivSelectLabel)
+              targetList.querySelector('ul').appendChild(newLi)
           }
 
-      }
+          function unrenderSelected() {
+              //se o click vier da targetList, o id do elemento que acionou a função deve ter -clone
+              callerId = check.id
+              //se o click vier do clone
+              if (callerId.indexOf('-clone') > -1) {
+                  console.log('chamada do filtro')
+                  check.parentElement.parentElement.remove()
+                  if (targetList.querySelector('ul').children.length == 0) {
+                      targetListDefault.style.display = 'block'
+                  }
+              } else {
+                  console.log('chamada do filtro')
+                  document.getElementById(callerId + '-clone').parentElement.parentElement.remove()
+                  console.log(targetList.querySelector('ul').children.length)
+                  if (targetList.querySelector('ul').children.length == 0) {
+                      targetListDefault.style.display = 'block'
+                  }
+              }
 
-      function renderSelected(data) {
-          console.log("selecionou");
-          console.log(data);
+
+
+
+          }
+
+          function selectHandler() {
+              if (isCheck) {
+                  renderSelected()
+              } else {
+                  //unrenderSelected(targetlist, targetListDefault)
+                  unrenderSelected()
+              }
+          }
+          selectHandler()
 
       }
 
@@ -129,6 +183,7 @@
               unrenderOutClick(dropdown)
           }
       }
+
 
       function unrenderOutClick(element) {
           // Adiciona um event listener para detectar cliques fora do elemento

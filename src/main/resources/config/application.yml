@@ -4,8 +4,8 @@ spring:
   enabled: true
   datasource:
     url: "jdbc:mysql://localhost:3306/folha_facil"
-    username:   Nalcant
-    password:   Nm@170604Folha_facil
+    username: "yourUser"
+    password: "yourPassWord"
   flyway:
     enabled: true
     baseline-on-migrate: true
